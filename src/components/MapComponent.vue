@@ -6,7 +6,7 @@
 
         <l-moving-marker v-for="team in teams" :key="team.name" :lat-lng="team.pos" :duration="1000" />
         <div v-show="dispMessage" class="flash-info">
-            <div>{{message}}</div>
+            <div><b>{{message.date}}</b> : {{message.message}}</div>            
         </div>
     </l-map>
 </template>
