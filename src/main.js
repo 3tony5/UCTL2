@@ -18,7 +18,7 @@ Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
 
-const API_URL = 'url'
+const API_URL = 'http://127.0.0.1:5000'
 
 setInterval(() => {
     // Récupérations du statut de la course
@@ -38,7 +38,17 @@ setInterval(() => {
     }, (error) => {
         error
     })
+
+    axios.get(API_URL + '/UPDATE_EVENT')
+    .then((response) => {
+        const events = response.data
+        store.commit('updateEvents', events)
+    }, (error) => {
+        error
+    })
 }, 10000)
+
+
 
 new Vue({
     store,

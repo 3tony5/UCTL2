@@ -12,7 +12,8 @@ const store = new Vuex.Store({
         teams: [],
         displayMessage: false,
         listMessage: [],
-        message: {date: '16:00', message: 'Début de la course'}
+        message: {date : "15:59", message : "Début de la course"},
+        events: []
     },
     mutations: {
         updateElapsedTime(state) {
@@ -25,6 +26,9 @@ const store = new Vuex.Store({
         },
         updateTeams(state, updatedTeams) {
             state.teams = updatedTeams
+        },
+        updateEvents(state, events){
+            state.events = events
         },
         updateMessage(state, message) {
             state.displayMessage = message
