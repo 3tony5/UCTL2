@@ -7,12 +7,12 @@ const store = new Vuex.Store({
     state: {
         raceStartTime: 0,
         // 0 : not started, 1 : live, 2 : finished
-        raceStatus: 1,
+        raceStatus: 0,
         elapsedTimeFromRaceStart: 0,
         teams: [],
         displayMessage: false,
         listMessage: [],
-        message: 'Début de la course dskjfhkuhedskfjoeezjdlrkflezdlrfjezjzhriuhfeiuezjdlrkflezdlrfjezjzhriuhfeiuezjdlrkflezdlrfjezjzhriuhfeiuezjdlrkflezdlrfjezjzhriuhfeiuezjdlrkflezdlrfjezjzhriuhfeiuezjdlrkflezdlrfjezjzhriuhfeiuezjdlrkflezdlrfjezjzhriuhfeiuezjdlrkflezdlrfjezjzhriuhfeiuezjdlrkflezdlrfjezjzhriuhfeiuzjdlrkflezdlrfjezjzhriuhfeiuhofiuheouhfiuerhgiurhe'
+        message: 'Début de la course'
     },
     mutations: {
         updateElapsedTime(state) {
