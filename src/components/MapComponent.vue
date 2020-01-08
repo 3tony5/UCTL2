@@ -3,11 +3,7 @@
         <l-tile-layer :url="tileUrl" :attribution="attribution" />
         <l-polyline :lat-lngs="segment.data" v-for="segment in segments" :key="segment.id" />
         <l-polyline :lat-lngs="transition.data" :color="transitionsColor" v-for="transition in transitions" :key="transition.id" />
-
         <l-moving-marker v-for="team in teams" :key="team.name" :lat-lng="team.pos" :duration="1000" />
-        <div v-show="dispMessage" class="flash-info">
-            <div :style="animation"><b>{{message.date}}</b> : {{message.message}}</div>            
-        </div>
     </l-map>
 </template>
 <script type="text/babel">
@@ -30,30 +26,9 @@
         computed: {
             teams () {
                 return this.$store.state.teams
-            },
-            dispMessage () {
-                return this.$store.state.displayMessage
-            },
-            message () {
-                return this.$store.state.message
-            },
-            animation () {
-                let time = 7 + this.$store.state.message.message.length * 0.1;
-                // this.dis(this.$store.state.message.message.length);
-                return {
-                    'animation': "defilement-rtl " + time + "s 1 linear"
-                }
             }
         },
         methods: {
-            dis: function (lgt) {
-                let time = 8000 + lgt*100
-                setTimeout(this.disable, time);
-            },
-            disable: function () {
-                this.$store.commit('updateMessage', false);
-                this.$store.commit('updateTextMessage');
-            }
         },
         data () {
             return {
@@ -83,32 +58,5 @@
         height: 400px
     }
 
-    .flash-info {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        border: 7px solid rgb(255, 0, 0);
-        background-color: rgba(255, 6, 6, 0.61);
-        overflow: hidden;                     /* masque tout ce qui dépasse */
-        z-index: 100000;
-    }
-
-    /* le bloc défilant */
-    .flash-info > :first-child {
-        display: inline-block;                /* modèle de boîte en ligne */
-        padding-right: 2em;                   /* un peu d'espace pour la transition */
-        padding-left: 100%;                   /* placement à droite du conteneur */
-        white-space: nowrap;                  /* pas de passage à la ligne */
-        font-size: 1.4em;
-        font-weight: bold;
-    }
-
-    @keyframes defilement-rtl {
-        0% {
-            transform: translate3d(0,0,0);      /* position initiale à droite */
-        }
-        100% {
-            transform: translate3d(-100%,0,0);  /* position finale à gauche */
-        }
-    }
+ 
 </style>
