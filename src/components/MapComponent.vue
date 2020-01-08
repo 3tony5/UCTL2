@@ -6,7 +6,7 @@
 
         <l-moving-marker v-for="team in teams" :key="team.name" :lat-lng="team.pos" :duration="1000" />
         <div v-show="dispMessage" class="flash-info">
-            <div><b>{{message.date}}</b> : {{message.message}}</div>            
+            <div :style="animation"><b>{{message.date}}</b> : {{message.message}}</div>            
         </div>
     </l-map>
 </template>
@@ -36,6 +36,23 @@
             },
             message () {
                 return this.$store.state.message
+            },
+            animation () {
+                let time = 7 + this.$store.state.message.message.length * 0.1;
+                // this.dis(this.$store.state.message.message.length);
+                return {
+                    'animation': "defilement-rtl " + time + "s 1 linear"
+                }
+            }
+        },
+        methods: {
+            dis: function (lgt) {
+                let time = 8000 + lgt*100
+                setTimeout(this.disable, time);
+            },
+            disable: function () {
+                this.$store.commit('updateMessage', false);
+                this.$store.commit('updateTextMessage');
             }
         },
         data () {
@@ -82,7 +99,6 @@
         padding-right: 2em;                   /* un peu d'espace pour la transition */
         padding-left: 100%;                   /* placement à droite du conteneur */
         white-space: nowrap;                  /* pas de passage à la ligne */
-        animation: defilement-rtl 3s infinite linear;
         font-size: 1.4em;
         font-weight: bold;
     }
