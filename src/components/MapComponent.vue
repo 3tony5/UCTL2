@@ -82,7 +82,7 @@
         padding-right: 2em;                   /* un peu d'espace pour la transition */
         padding-left: 100%;                   /* placement à droite du conteneur */
         white-space: nowrap;                  /* pas de passage à la ligne */
-        animation: defilement-rtl 15s infinite linear;
+        animation: defilement-rtl 3s infinite linear;
         font-size: 1.4em;
         font-weight: bold;
     }

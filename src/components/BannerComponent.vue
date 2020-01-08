@@ -19,13 +19,13 @@
             },
             
             messageEvents () {
-                let equipe1 = this.getTeamName(this.$store.state.events[0].team1);
-                let equipe2 = this.getTeamName(this.$store.state.events[0].team2);
+                let equipe1 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team1);
+                let equipe2 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team2);
                 var a = {date : "16.00", message : "L'équipe " + equipe1 + " a dépassé l'équipe " + equipe2};
                 this.$store.commit('addTextMessage', a);
                 this.$store.commit('updateMessage', true);
                 this.$store.state.nbreEvents = this.$store.state.nbreEvents + 1;
-                setTimeout(this.disable,15000);
+                setTimeout(this.disable,3000);
             },
             disable: function () {
                 this.$store.commit('updateMessage', false);
