@@ -31,8 +31,8 @@ const store = new Vuex.Store({
         updateEvents(state, events){
             state.events = events
         },
-        updateMessage(state, message) {
-            state.displayMessage = message
+        updateMessage(state, boolAffich) {
+            state.displayMessage = boolAffich
         },
         addTextMessage(state, msg) {
             state.listMessage.push(msg)

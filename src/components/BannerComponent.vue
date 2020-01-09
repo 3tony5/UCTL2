@@ -28,29 +28,33 @@
         methods: {
             getTeamName(id){
                 let i = 0;
-                for(i; i<=this.$store.state.teams.length-1; i++){
+                for(i; i<=this.$store.state.teams.length; i++){
                     if(id === this.$store.state.teams[i].id){
                         return this.$store.state.teams[i].name;
                     }
                 }
-                return "null";
+                return "idNotFound";
             },
-            
             messageEvents () {
-                let equipe1 = this.getTeamName(this.$store.state.events[0].team1);
-                let equipe2 = this.getTeamName(this.$store.state.events[0].team2);
-                var a = {date : "16.00", message : "L'équipe " + equipe1 + " a dépassé l'équipe " + equipe2};
-                this.$store.commit('addTextMessage', a);
+                this.EventsToListMessage();
                 this.$store.commit('updateMessage', true);
-                setTimeout(this.disable,10000)
-            },
-            dis: function (lgt) {
-                let time = 8000 + lgt*100
+                let time = 7000; //8000 + lgt*100
                 setTimeout(this.disable, time);
+            },
+            EventsToListMessage: function () {
+                for(this.$store.state.nbreEvents; this.$store.state.nbreEvents < this.$store.state.events.length;this.$store.state.nbreEvents++){
+                    let equipe1 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team1);
+                    let equipe2 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team2);
+                    var a = {date : "16.00", message : "L'équipe " + equipe1 + " a dépassé l'équipe " + equipe2};
+                    //Ajouter la fonction de randomisation des phrases à la place
+                    this.$store.commit('addTextMessage', a);
+                }
             },
             disable: function () {
                 this.$store.commit('updateMessage', false);
-                this.$store.commit('updateTextMessage');
+                if (this.$store.state.listMessage.length > 0){
+                    this.$store.commit('updateTextMessage');
+                }
             }
         }
     }
