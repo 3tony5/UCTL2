@@ -10,9 +10,6 @@
 
 <script>
     export default {
-        state: {
-        overtake = ['L{équipe1} a dépassé {équipe2} et se retrouve en position {position}']
-        },
         computed: {
             dispMessage () {
                 return this.$store.state.displayMessage
