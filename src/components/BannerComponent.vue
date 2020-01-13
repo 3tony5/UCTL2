@@ -3,7 +3,8 @@
         <div v-show="dispMessage" class="flash-info">
             <div :style="animation"><b>{{message.date}}</b> : {{message.message}}</div>          
         </div>
-        <button v-on:click="messageEvents">Lancer le message</button>  
+        <!-- button v-on:click="messageEvents">Lancer le message</button> -->
+        <br>  
     </div>
 </template>
 
@@ -17,8 +18,7 @@
                 return this.$store.state.message
             },
             animation () {
-                let time = 7 + this.$store.state.message.message.length * 0.1;
-                // this.dis(this.$store.state.message.message.length);
+                let time = 7 ; // + this.$store.state.message.message.length * 0.1;
                 return {
                     'animation': "defilement-rtl " + time + "s 1 linear"
                 }
@@ -28,14 +28,14 @@
         methods: {
             getTeamName(id){
                 let i = 0;
-                for(i; i<=this.$store.state.teams.length; i++){
+                for(i; i <= this.$store.state.teams.length; i++){
                     if(id === this.$store.state.teams[i].id){
                         return this.$store.state.teams[i].name;
                     }
                 }
                 return "idNotFound";
             },
-            messageEvents () {
+            messageEvents: function () {
                 this.EventsToListMessage();
                 this.$store.commit('updateMessage', true);
                 let time = 7000; //8000 + lgt*100
@@ -45,9 +45,10 @@
                 for(this.$store.state.nbreEvents; this.$store.state.nbreEvents < this.$store.state.events.length;this.$store.state.nbreEvents++){
                     let equipe1 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team1);
                     let equipe2 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team2);
-                    var a = {date : "16.00", message : "L'équipe " + equipe1 + " a dépassé l'équipe " + equipe2};
+                    var heure = new Date();
+                    var mes = {date :  heure.getHours() + ":"+(heure.getMinutes() < 10 ? "0" : "") + heure.getMinutes(), message : "L'équipe " + equipe1 + " a dépassé l'équipe " + equipe2};
                     //Ajouter la fonction de randomisation des phrases à la place
-                    this.$store.commit('addTextMessage', a);
+                    this.$store.commit('addTextMessage', mes);
                 }
             },
             disable: function () {
@@ -55,11 +56,14 @@
                 if (this.$store.state.listMessage.length > 0){
                     this.$store.commit('updateTextMessage');
                 }
+                setTimeout(this.messageEvents, 3000);
             }
+        },
+        created: function () {
+                this.messageEvents();
         }
     }
 </script>
-
 <style>
    .flash-info {
         position: absolute;
