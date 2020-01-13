@@ -10,6 +10,9 @@
 
 <script>
     export default {
+        state: {
+        overtake = ['L{équipe1} a dépassé {équipe2} et se retrouve en position {position}']
+        },
         computed: {
             dispMessage () {
                 return this.$store.state.displayMessage
@@ -26,6 +29,25 @@
             
         },
         methods: {
+            /* getRandomInt(max){
+                 return Math.floor(Math.random() * Math.floor(max));
+            },
+            randomMessage(events){
+                switch (events.events){
+                    case "OVERTAKE" :
+                        let equipe1 = this.getTeamName(events.team1);
+                        let equipe2 = this.getTeamName(events.team2);
+                        let rand = getRandomInt(this.overtake.length-1);
+                        let mes = this.overtake[rand];
+                        return "L'équipe " + equipe1 + " a dépassé l'équipe " + equipe2;
+                    case "FRANCHETAPE" :
+                        let equipe = this.getTeamName(events.team1);
+                        return ""
+                    default:
+                        break;
+
+                }
+            },*/
             getTeamName(id){
                 let i = 0;
                 for(i; i <= this.$store.state.teams.length; i++){
