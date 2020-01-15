@@ -26,25 +26,48 @@
             
         },
         methods: {
-            /* getRandomInt(max){
+            getRandomInt(max){
                  return Math.floor(Math.random() * Math.floor(max));
             },
             randomMessage(events){
                 switch (events.events){
-                    case "OVERTAKE" :
+                    case "OVERTAKE" : {
                         let equipe1 = this.getTeamName(events.team1);
                         let equipe2 = this.getTeamName(events.team2);
-                        let rand = getRandomInt(this.overtake.length-1);
-                        let mes = this.overtake[rand];
-                        return "L'équipe " + equipe1 + " a dépassé l'équipe " + equipe2;
-                    case "FRANCHETAPE" :
+                        let position = events.position;
+                        let rand = this.getRandomInt(this.$store.state.overtake.length);
+                        let mes = this.$store.state.overtake[rand];
+                        mes = mes.replace("~e1", equipe1);
+                        mes = mes.replace("~e2", equipe2);
+                        mes = mes.replace("~p", position);
+                        return mes;
+                    }
+                    case "FRANCHETAPE" :{
                         let equipe = this.getTeamName(events.team1);
-                        return ""
+                        let rand = this.getRandomInt(this.$store.state.franchetape.length);
+                        let section = events.section;
+                        let mes = this.$store.state.franchetape[rand];
+                        mes = mes.replace("~e1", equipe);
+                        mes = mes.replace("~se", section);
+                        return mes;
+                    }
+                    case "ARRIVEE" :{
+                        let equipe = this.getTeamName(events.team1);
+                        let rand = this.getRandomInt(this.$store.state.arrivee.length);
+                        let temps = events.hours;
+                        let position = events.position;
+                        let mes = this.$store.state.arrivee[rand];
+                        mes = mes.replace("~e1", equipe);
+                        mes = mes.replace("~t", temps);
+                        mes = mes.replace("~p", position);
+                        return mes;
+                    }
+                    
                     default:
                         break;
 
                 }
-            },*/
+            },
             getTeamName(id){
                 let i = 0;
                 for(i; i <= this.$store.state.teams.length; i++){
@@ -62,10 +85,10 @@
             },
             EventsToListMessage: function () {
                 for(this.$store.state.nbreEvents; this.$store.state.nbreEvents < this.$store.state.events.length;this.$store.state.nbreEvents++){
-                    let equipe1 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team1);
-                    let equipe2 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team2);
+               //    let equipe1 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team1);
+               //    let equipe2 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team2);
                     var heure = new Date();
-                    var mes = {date :  heure.getHours() + ":"+(heure.getMinutes() < 10 ? "0" : "") + heure.getMinutes(), message : "L'équipe " + equipe1 + " a dépassé l'équipe " + equipe2};
+                    var mes = {date :  heure.getHours() + ":"+(heure.getMinutes() < 10 ? "0" : "") + heure.getMinutes(), message : this.randomMessage((this.$store.state.events[this.$store.state.nbreEvents]))};
                     //Ajouter la fonction de randomisation des phrases à la place
                     this.$store.commit('addTextMessage', mes);
                 }
