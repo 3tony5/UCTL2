@@ -32,34 +32,28 @@
             randomMessage(events){
                 switch (events.events){
                     case "OVERTAKE" : {
-                        let equipe1 = this.getTeamName(events.team1);
-                        let equipe2 = this.getTeamName(events.team2);
-                        let position = events.position;
                         let rand = this.getRandomInt(this.$store.state.overtake.length);
                         let mes = this.$store.state.overtake[rand];
-                        mes = mes.replace("~e1", equipe1);
-                        mes = mes.replace("~e2", equipe2);
-                        mes = mes.replace("~p", position);
+                        mes = mes.replace("~t1", this.getTeamName(events.team1));
+                        mes = mes.replace("~t2", this.getTeamName(events.team2));
+                        mes = mes.replace("~p", events.position);
+                        mes = mes.replace("~s", events.section);
                         return mes;
                     }
-                    case "FRANCHETAPE" :{
-                        let equipe = this.getTeamName(events.team1);
-                        let rand = this.getRandomInt(this.$store.state.franchetape.length);
-                        let section = events.section;
-                        let mes = this.$store.state.franchetape[rand];
-                        mes = mes.replace("~e1", equipe);
-                        mes = mes.replace("~se", section);
+                    case "STAGEFINISHED" :{
+                        let rand = this.getRandomInt(this.$store.state.stageFinished.length);
+                        let mes = this.$store.state.stageFinished[rand];
+                        mes = mes.replace("~t", this.getTeamName(events.team));
+                        mes = mes.replace("~h", events.hours);
+                        mes = mes.replace("~s", events.section);
                         return mes;
                     }
-                    case "ARRIVEE" :{
-                        let equipe = this.getTeamName(events.team1);
-                        let rand = this.getRandomInt(this.$store.state.arrivee.length);
-                        let temps = events.hours;
-                        let position = events.position;
-                        let mes = this.$store.state.arrivee[rand];
-                        mes = mes.replace("~e1", equipe);
-                        mes = mes.replace("~t", temps);
-                        mes = mes.replace("~p", position);
+                    case "ARRIVAL" :{
+                        let rand = this.getRandomInt(this.$store.state.arrival.length);
+                        let mes = this.$store.state.arrival[rand];
+                        mes = mes.replace("~t", this.getTeamName(events.team));
+                        mes = mes.replace("~h", events.hours);
+                        mes = mes.replace("~p", events.position);
                         return mes;
                     }
                     
@@ -84,12 +78,9 @@
                 setTimeout(this.disable, time);
             },
             EventsToListMessage: function () {
-                for(this.$store.state.nbreEvents; this.$store.state.nbreEvents < this.$store.state.events.length;this.$store.state.nbreEvents++){
-               //    let equipe1 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team1);
-               //    let equipe2 = this.getTeamName(this.$store.state.events[this.$store.state.nbreEvents].team2);
-                    var heure = new Date();
-                    var mes = {date :  heure.getHours() + ":"+(heure.getMinutes() < 10 ? "0" : "") + heure.getMinutes(), message : this.randomMessage((this.$store.state.events[this.$store.state.nbreEvents]))};
-                    //Ajouter la fonction de randomisation des phrases à la place
+                for(this.$store.state.nberEvents; this.$store.state.nberEvents < this.$store.state.events.length;this.$store.state.nberEvents++){
+                    var hour = new Date();
+                    var mes = {date :  hour.getHours() + ":"+(hour.getMinutes() < 10 ? "0" : "") + hour.getMinutes(), message : this.randomMessage((this.$store.state.events[this.$store.state.nberEvents]))};
                     this.$store.commit('addTextMessage', mes);
                 }
             },
