@@ -112,7 +112,7 @@
              */
             messageEvents: function () {
                 this.eventsToListMessage();
-                this.updateMessage(true);
+                this.displayMessage = true;
                 let time = 7000; //8000 + lgt*100
                 setTimeout(this.disable, time);
             },
@@ -130,14 +130,11 @@
              * 
              */
             disable: function () {
-                this.updateMessage(false);
+                this.displayMessage = false;
                 if (this.listMessage.length > 0){
                     this.message = this.listMessage.shift();
                 }
                 setTimeout(this.messageEvents, 3000);
-            },
-            updateMessage(boolAffich) {
-                this.displayMessage = boolAffich;
             }
         },
         created: function () {
