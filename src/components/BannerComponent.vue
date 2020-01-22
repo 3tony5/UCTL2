@@ -12,10 +12,12 @@
     export default {
         data: function(){
             return{
-                nberEvents: 0,
+                nberEvents: 0, //Total number of events that have happened since the beginning
                 displayMessage: false,
-                listMessage: [],
-                message: {date : "15:59", message : "Début de la course"},
+                listMessage: [], //List of messages
+                message: {date : "15:59", message : "Début de la course"}, //Initial message 
+
+                // Different arrays of Strings that allow for a more fluid message
                 overtake: ["L'équipe ~t1 dépasse l'équipe ~t2 et se retrouve en position ~p",
                     "L'équipe ~t2 est dépassé par l'équipe ~t1", 
                     "~t1 accélère et dépasse ~t2",
@@ -37,6 +39,8 @@
             }
         },
         computed: {
+
+            //Dictates the time the banner takes to cross the screen
             animation () {
                 let time = 7 ; // + this.$store.state.message.message.length * 0.1;
                 return {
@@ -46,9 +50,16 @@
             
         },
         methods: {
+            //Get a random int between 0 and max
             getRandomInt(max){
                  return Math.floor(Math.random() * Math.floor(max));
             },
+            /**Generates a random message for the current event, to give a more human feel to 
+             * the messages. It takes different information from the JSON and puts them in a message.
+             * 
+             * @param events the id of the event
+             * @returns a random message
+             */
             randomMessage(events){
                 switch (events.events){
                     case "OVERTAKE" : {
@@ -82,6 +93,10 @@
 
                 }
             },
+            /**Returns the name of the team from its ID
+             * @param id the id of the team
+             * @returns the name of the team in French
+             */
             getTeamName(id){
                 let i = 0;
                 for(i; i <= this.$store.state.teams.length; i++){
@@ -91,19 +106,29 @@
                 }
                 return "idNotFound";
             },
+            /**Main function for showing messages in the banner, calls important methods and then
+             * goes to sleep
+             * 
+             */
             messageEvents: function () {
-                this.EventsToListMessage();
+                this.eventsToListMessage();
                 this.updateMessage(true);
                 let time = 7000; //8000 + lgt*100
                 setTimeout(this.disable, time);
             },
-            EventsToListMessage: function () {
+            /**Takes the events and transforms them into messages and stores them in "listMessage"
+             * 
+             */
+            eventsToListMessage: function () {
                 for(this.nberEvents; this.nberEvents < this.$store.state.events.length; this.nberEvents++){
                     var hour = new Date();
                     var mess = {date :  hour.getHours() + ":"+(hour.getMinutes() < 10 ? "0" : "") + hour.getMinutes(), message : this.randomMessage(this.$store.state.events[this.nberEvents])};
                     this.listMessage.push(mess);
                 }
             },
+            /**Disables the banner and shifts the message into the queue
+             * 
+             */
             disable: function () {
                 this.updateMessage(false);
                 if (this.listMessage.length > 0){
